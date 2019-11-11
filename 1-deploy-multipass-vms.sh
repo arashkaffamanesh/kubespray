@@ -3,7 +3,7 @@
 NODES=$(echo node{1..6})
 
 # Create containers
-#for NODE in ${NODES}; do multipass launch --name ${NODE} --cpus 2 --mem 4G --disk 10G; done
+for NODE in ${NODES}; do multipass launch --name ${NODE} --cpus 2 --mem 4G --disk 10G; done
 
 # Wait a few seconds for nodes to be up
 sleep 5

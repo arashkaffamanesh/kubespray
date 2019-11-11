@@ -250,3 +250,6 @@ https://medium.com/better-programming/kubernetes-tips-ha-cluster-with-kubespray-
 
 https://medium.com/@leonardo.bueno/setting-up-a-kubernetes-cluster-with-kubespray-1bf4ce8ccd73
 
+### Kubernetes on baremetal: kubespray-terraform Multimaster-HA , haproxy-API , Traefik and App’s with Horizontal Pod Autoscaling.
+
+https://medium.com/@earielli/kubernetes-on-baremetal-kubespray-terraform-multimaster-ha-haproxy-api-traefik-and-apps-with-ec165133c5ca
