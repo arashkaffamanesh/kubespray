@@ -15,9 +15,10 @@ ansible-playbook -i hosts.ini -u ubuntu -b --key-file=~/.ssh/id_rsa.pub cluster.
 ./9-metal-lb.sh
 ```
 
-## Get the toke for the dashboard
+## Get the token for the dashboard
 
 kubectl -n kube-system describe secrets `kubectl -n kube-system get secrets | awk '/clusterrole-aggregation-controller/ {print $1}'` | awk '/token:/ {print $2}'
+
 k port-forward -n kube-system kubernetes-dashboard-556b9ff8f8-6pwp6 8443:8443
 
 Deploy a Production Ready Kubernetes Cluster
