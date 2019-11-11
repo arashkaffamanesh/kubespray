@@ -1,5 +1,25 @@
 ![Kubernetes Logo](https://raw.githubusercontent.com/kubernetes-sigs/kubespray/master/docs/img/kubernetes-logo.png)
 
+## Deployment with multipass VMs on your local machine
+
+```bash
+git clone git@github.com:arashkaffamanesh/kubespray.git
+cd kubespray/
+pip3 install -r requirements.txt
+# cp -rfp inventory/sample inventory/mycluster
+# run 6 VMs for HA
+./1-deploy-multipass-vms.sh
+# deploy 2 masters with 3 etcds on 3 nodes and 3 workers on 3 other nodes
+ansible-playbook -i hosts.ini -u ubuntu -b --key-file=~/.ssh/id_rsa.pub cluster.yml
+# deploy metal-lb and ghost for testing
+./9-metal-lb.sh
+```
+
+## Get the toke for the dashboard
+
+kubectl -n kube-system describe secrets `kubectl -n kube-system get secrets | awk '/clusterrole-aggregation-controller/ {print $1}'` | awk '/token:/ {print $2}'
+k port-forward -n kube-system kubernetes-dashboard-556b9ff8f8-6pwp6 8443:8443
+
 Deploy a Production Ready Kubernetes Cluster
 ============================================
 
@@ -210,3 +230,14 @@ CI Tests
 
 CI/end-to-end tests sponsored by Google (GCE)
 See the [test matrix](docs/test_cases.md) for details.
+
+## Related links
+
+### Kubernetes Tips: HA Cluster With Kubespray
+
+https://medium.com/better-programming/kubernetes-tips-ha-cluster-with-kubespray-69e5bb2fa444
+
+### Setting up a Kubernetes cluster with Kubespray
+
+https://medium.com/@leonardo.bueno/setting-up-a-kubernetes-cluster-with-kubespray-1bf4ce8ccd73
+
