@@ -1,6 +1,13 @@
 ![Kubernetes Logo](https://raw.githubusercontent.com/kubernetes-sigs/kubespray/master/docs/img/kubernetes-logo.png)
 
+Deploy a Production Ready Kubernetes Cluster with Kubespary and Kubeadm
+=======================================================================
+
 ## Deployment with multipass VMs on your local machine
+
+## TL;DR
+
+This is a clone of Kubespray repo with few scripts to play on multipass VMs on your local machine.
 
 ```bash
 git clone git@github.com:arashkaffamanesh/kubespray.git
@@ -21,8 +28,7 @@ kubectl -n kube-system describe secrets `kubectl -n kube-system get secrets | aw
 
 k port-forward -n kube-system kubernetes-dashboard-556b9ff8f8-6pwp6 8443:8443
 
-Deploy a Production Ready Kubernetes Cluster
-============================================
+## Kubespray Readme
 
 If you have questions, check the [documentation](https://kubespray.io) and join us on the [kubernetes slack](https://kubernetes.slack.com), channel **\#kubespray**.
 You can get your invite [here](http://slack.k8s.io/)
