@@ -20,6 +20,8 @@ pip3 install -r requirements.txt
 ansible-playbook -i hosts.ini -u ubuntu -b --key-file=~/.ssh/id_rsa.pub cluster.yml
 # deploy metal-lb and ghost for testing
 ./9-metal-lb.sh
+# destroy your cluster
+./cleanup.sh
 ```
 
 ## Get the token for the dashboard
