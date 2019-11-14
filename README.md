@@ -18,6 +18,9 @@ pip3 install -r requirements.txt
 ./1-deploy-multipass-vms.sh
 # deploy 2 masters with 3 etcds on 3 nodes and 3 workers on 3 other nodes
 ansible-playbook -i hosts.ini -u ubuntu -b --key-file=~/.ssh/id_rsa.pub cluster.yml
+multipass exec node1 -- bash -c "sudo cat /etc/kubernetes/admin.conf" > kube.config
+export KUBECONFIG=kube.config
+kubectl get nodes
 # deploy metal-lb and ghost for testing
 ./9-metal-lb.sh
 # destroy your cluster
@@ -26,11 +29,13 @@ ansible-playbook -i hosts.ini -u ubuntu -b --key-file=~/.ssh/id_rsa.pub cluster.
 
 ## Get the token for the dashboard
 
+```bash
 kubectl -n kube-system describe secrets `kubectl -n kube-system get secrets | awk '/clusterrole-aggregation-controller/ {print $1}'` | awk '/token:/ {print $2}'
+```
 
 k port-forward -n kube-system kubernetes-dashboard-556b9ff8f8-6pwp6 8443:8443
 
-## Kubespray Readme
+## Kubespray README
 
 If you have questions, check the [documentation](https://kubespray.io) and join us on the [kubernetes slack](https://kubernetes.slack.com), channel **\#kubespray**.
 You can get your invite [here](http://slack.k8s.io/)
@@ -253,3 +258,32 @@ https://medium.com/@leonardo.bueno/setting-up-a-kubernetes-cluster-with-kubespra
 ### Kubernetes on baremetal: kubespray-terraform Multimaster-HA , haproxy-API , Traefik and App’s with Horizontal Pod Autoscaling.
 
 https://medium.com/@earielli/kubernetes-on-baremetal-kubespray-terraform-multimaster-ha-haproxy-api-traefik-and-apps-with-ec165133c5ca
+
+### Kubernetes Cluster Deployment using Kubespray
+
+https://medium.com/@raman.pndy/kubernetes-cluster-deployment-using-kubespray-ebc4bec082c1
+
+### High Available Kubernetes Cluster Setup using Kubespray
+
+https://schoolofdevops.github.io/ultimate-kubernetes-bootcamp/cluster_setup_kubespray/
+
+### Nging Ingress Controller Deployment
+
+https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md
+
+https://medium.com/swlh/using-nginx-ingress-controllers-on-kubernetes-on-centos-7-99f6df969b45
+
+https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
+
+https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration
+
+helm install --namespace ingress-nginx --name nginx-ingress stable/nginx-ingress --set controller.kind=DaemonSet
+
+
+helm install --namespace ingress-nginx --name nginx-ingress stable/nginx-ingress \
+             --set rbac.create=true \
+             --set defaultBackend=false \
+             --set controller.service.externalTrafficPolicy=Local \
+             --set controller.scope.enabled=true \
+	         --set controller.kind=DaemonSet
+
